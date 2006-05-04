@@ -25,7 +25,8 @@ def CreateRemoteThread(hProcess, pfn, param):
     param = c_void_p(param)
     pfn = c_void_p(pfn) # XXX
 
-    return _CreateRemoteThread(hProcess, c_void_p(), pfn, param, c_uint(0), c_void_p())
+    return _CreateRemoteThread(hProcess, c_void_p(), c_uint(0), pfn,
+                               param, c_uint(0), c_void_p())
 
 
 
