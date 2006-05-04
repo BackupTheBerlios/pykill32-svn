@@ -1,0 +1,26 @@
+THIS SOFTWARE IS UNDER MIT LICENSE.  
+Copyright (C) 2005 Manlio Perillo
+
+Read LICENSE file for more informations.
+
+
+INTRODUCTION: 
+pykill32 enable users to send signals to a remote (Python) process, in
+the Windows operating system.
+
+
+EXAMPLE:
+import signal
+import pykill32
+ 
+pykill32.kill(pid, signal.SIGTERM)
+
+
+REQUIREMENTS: 
+Python 2.4 (http://python.org/)
+pywin32
+ctypes
+ 
+
+TODO:
+Check that pykill32 does not do insane things.
