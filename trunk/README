@@ -6,7 +6,7 @@ Read LICENSE file for more informations.
 
 INTRODUCTION: 
 pykill32 enable users to send signals to a remote (Python) process, in
-the Windows operating system.
+the Windows NT operating system.
 
 
 EXAMPLE:
@@ -16,10 +16,14 @@ import pykill32
 pykill32.kill(pid, signal.SIGTERM)
 
 
+or via command line:
+python -m pykill32 pid SIGTERM
+
+
 REQUIREMENTS: 
 Python 2.4 (http://python.org/)
-pywin32
-ctypes
+pywin32 (a recent version)
+ctypes (a recent version)
  
 
 TODO:

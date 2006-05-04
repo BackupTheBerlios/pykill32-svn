@@ -1,6 +1,6 @@
 """pykill32: send signals to a remote (Python) process.
 
-test script.
+Test script for the C implementation.
 
 $Id$
 
