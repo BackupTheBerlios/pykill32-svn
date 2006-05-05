@@ -35,5 +35,5 @@ setup(name="pykill32",
           "Topic :: Software Development :: Libraries :: Python Modules",
           ],
       py_modules = ["pykill32"], # ext_modules=[cpykill32]
-      scripts = ["bin", "kill.py"]
+      scripts = ["bin/kill.py"]
       )
