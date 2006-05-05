@@ -14,7 +14,7 @@ from win32con import PROCESS_CREATE_THREAD, PROCESS_VM_OPERATION
 
 
 
-# unfortunately CreateRemoteThreas is not supplied with pywin32
+# CreateRemoteThreas is not supplied with pywin32
 def CreateRemoteThread(hProcess, pfn, param):
     from win32api import GetLastError, FormatMessage
     from pywintypes import error, HANDLE
@@ -97,7 +97,7 @@ def kill(pid, sig):
     """
   
     # open the remote process
-    # XXX why we need PROCESS_VM_OPERATION?
+    # XXX why do we need PROCESS_VM_OPERATION?
     flags = PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION
     hProcess = OpenProcess(flags, False, pid)
 
@@ -121,6 +121,11 @@ s can be a number or a string.
 l list all supported signals.
     
 If no signal is specified, the TERM signal is sent.
+
+THIS SOFTWARE IS UNDER MIT LICENSE.
+(C) 2006 Perillo Manlio (manlio.perillo@gmail.com)
+
+Read LICENSE file for more informations.
     """
     
     import sys
