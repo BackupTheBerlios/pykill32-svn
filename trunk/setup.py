@@ -21,6 +21,7 @@ setup(name="pykill32",
       author="Manlio Perillo",
       author_email="manlio.perillo@gmail.com",
       description="send signals to a remote (Python) process",
+      url="http://developer.berlios.de/projects/pykill32/",
       classifiers=[
           "Development Status :: 4 - Beta",
           "Environment :: Console",
@@ -28,9 +29,11 @@ setup(name="pykill32",
           "Intended Audience :: Developers",
           "Intended Audience :: System Administrators",
           "License :: OSI Approved :: MIT License",
-          "Operating System :: Microsoft :: Windows :: Windows NT/2000",
+          # XXX only for Windows 2000 and superior
+          "Operating System :: Microsoft :: Windows :: Windows NT/2000", 
           "Programming Language :: Python",
           "Topic :: Software Development :: Libraries :: Python Modules",
           ],
-      py_modules = ["pykill32"] #, ext_modules=[cpykill32]
+      py_modules = ["pykill32"], # ext_modules=[cpykill32]
+      scripts = ["bin", "kill.py"]
       )

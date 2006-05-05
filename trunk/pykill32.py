@@ -10,22 +10,29 @@ Read LICENSE file for more informations.
 
 from win32api import GetProcAddress, GetModuleHandle, OpenProcess
 from win32event import WaitForSingleObject, INFINITE 
-from win32con import PROCESS_CREATE_THREAD, PROCESS_VM_OPERATION, \
-    PROCESS_VM_WRITE
-
+from win32con import PROCESS_CREATE_THREAD, PROCESS_VM_OPERATION
 
 # unfortunately CreateRemoteThreas is not supplied with pywin32
 def CreateRemoteThread(hProcess, pfn, param):
+    from win32api import GetLastError, FormatMessage
+    from pywintypes import error, HANDLE
     from ctypes import windll, c_uint, c_void_p
+    
     
     _CreateRemoteThread = windll.kernel32.CreateRemoteThread
     hProcess = c_uint(hProcess.handle) # XXX
     param = c_void_p(param)
     pfn = c_void_p(pfn) # XXX
 
-    return _CreateRemoteThread(hProcess, c_void_p(), c_uint(0), pfn,
-                               param, c_uint(0), c_void_p())
+    hThread = _CreateRemoteThread(hProcess, c_void_p(), c_uint(0),
+                                  pfn, param, c_uint(0), c_void_p())
 
+    if not hThread:
+        err = GetLastError()
+        errmsg = FormatMessage(err)
+        raise error(err, "CreateRemoteThread", errmsg)
+
+    return HANDLE(hThread)
 
 
 signals = {
@@ -43,15 +50,16 @@ def kill(pid, sig):
     """
   
     # open the remote process
-    flags = PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE
+    # XXX why we need PROCESS_VM_OPERATION?
+    flags = PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION
     hProcess = OpenProcess(flags, False, pid)
 
     # obtain the address of the raise method in the MSVCR71 module
     # XXX here we obtain the map address in the current address space,
     # just hope that the system map the CRT DLL at the same address
     # for every process.
-    hModule = GetModuleHandle("MSVCR71");
-    pfn = GetProcAddress(hModule, "raise");
+    hModule = GetModuleHandle("MSVCR71") # XXX is this the lib to use?
+    pfn = GetProcAddress(hModule, "raise")
   
     # create a remote thread that calls raise
     hThread = CreateRemoteThread(hProcess, pfn, sig)
@@ -60,7 +68,10 @@ def kill(pid, sig):
     WaitForSingleObject(hThread, INFINITE)
 
 
-if __name__ == "__main__":
+def main():
+    """Command line interface for pykill32.
+    """
+    
     import sys
 
 
@@ -73,3 +84,6 @@ if __name__ == "__main__":
         print "invalid signal", sig
     else:
         kill(pid, sig)
+
+if __name__ == "__main__":
+    main()
