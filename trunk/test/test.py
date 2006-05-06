@@ -39,21 +39,17 @@ class TestKill32(unittest.TestCase):
         """
         
         # get the address in our address space
-        mod = win32api.GetModuleHandle("MSVCR71")
+        mod = win32api.GetModuleHandle("MSVCR71.dll")
         address = win32api.GetProcAddress(mod, "raise")
         
-#         command = """import win32api
-#             mod = win32api.GetModuleHandle('MSVCR71')
-#             print win32api.GetProcAddress(mod, 'raise')
-#             """
-        
+        cmd = "import win32api; " \
+            "mod = win32api.GetModuleHandle('MSVCR71.dll'); " \
+            "print win32api.GetProcAddress(mod, 'raise')"
+
         # run several python processes
         for i in range(10):
-            stdin, stdout = os.popen4("python -")
-            stdin.write("import win32api\n")
-            stdin.write("mod = win32api.GetModuleHandle('MSVCR71')\n")
-            stdin.write("print win32api.GetProcAddress(mod, 'raise')\n")
-#            stdin.write(command)
+            stdin, stdout = os.popen4("python -u -")
+            stdin.write(cmd)
             stdin.close()
             remoteAddress = int(stdout.read())
 

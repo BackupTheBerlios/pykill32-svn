@@ -27,9 +27,11 @@ ctypes (a recent version)
  
 
 LIMITATIONS:
-pykill32 assume that the remote process links to the MSVCR71 DLL and
-that the system map this DLL at the same address for all processes
-that use it.
+pykill32 assumes that the remote process links to the MSVCR71.dll 
+(old the oldest msvcrt.dll) DLL and that the system maps this DLL at
+the same address for all processes that use it.
+
+Virtually all Windows programs use the C Runtime library.
 
 
 TODO:
