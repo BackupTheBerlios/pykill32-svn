@@ -1,6 +1,4 @@
-"""pykill32: send signals to a remote (Python) process.
-
-Test suite
+"""Test suite for kill32 module.
 
 $Id$
 
@@ -19,7 +17,8 @@ import unittest
 sys.path.append('../')
 
 import win32api, pywintypes
-import pykill32
+import toolhelp32
+import kill32
 
 
 class TestKill32(unittest.TestCase):
@@ -55,16 +54,6 @@ class TestKill32(unittest.TestCase):
 
             self.failUnlessEqual(address, remoteAddress)
 
-    def testProcessId(self):
-        handle = os.spawnv(os.P_NOWAIT, self.bin, 
-                          ["-c import time; time.sleep(3)"])
-        pid = pykill32.GetProcessId(handle)
-        self.failUnless(pid)
-
-        self.failUnlessRaises(pywintypes.error, 
-                              pykill32.GetProcessId,
-                              0)
-                          
     def testKillTERM(self):
         """Test of a clean shutdown of a Twisted process.
         """
@@ -73,8 +62,8 @@ class TestKill32(unittest.TestCase):
                            [self.bin, "twisted_process.py"])
 
         time.sleep(1) # XXX give time to reactor to start
-        pid = pykill32.GetProcessId(handle)
-        pykill32.kill(pid, signal.SIGTERM)
+        pid = toolhelp32.GetProcessId(handle)
+        kill32.kill(pid, signal.SIGTERM)
 
         os.waitpid(handle, os.P_WAIT)
         lines = file(".out").readlines()
@@ -90,8 +79,8 @@ class TestKill32(unittest.TestCase):
                            [self.bin, "twisted_process.py"])
 
         time.sleep(1)  # XXX give time to reactor to start
-        pid = pykill32.GetProcessId(handle)
-        pykill32.kill(pid, signal.SIGILL)
+        pid = toolhelp32.GetProcessId(handle)
+        kill32.kill(pid, signal.SIGILL)
 
         os.waitpid(handle, os.P_WAIT)
         lines = file(".out").readlines()

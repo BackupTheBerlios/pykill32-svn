@@ -1,6 +1,4 @@
-"""pykill32: send signals to a remote (Python) process.
-
-Twisted process test.
+"""Test twisted process.
 
 $Id$
 
@@ -9,7 +7,6 @@ THIS SOFTWARE IS UNDER MIT LICENSE.
 
 Read LICENSE file for more informations.
 """
-
 
 import os
 import sys

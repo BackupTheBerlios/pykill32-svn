@@ -1,9 +1,7 @@
-"""pykill32: send signals to a remote (Python) process.
+"""Command line interface for kill32, 
+with emulation of POSIX kill(1).
 
 $Id$
-
-Command line interface for pykill32, 
-with emulation of POSIX kill(1).
 
 kill [-l] [-s] pid
     
@@ -22,7 +20,7 @@ import sys
 import signal
 from getopt import gnu_getopt as getopt, GetoptError
 
-from pykill32 import signals, kill
+from kill32 import signals, kill
     
 try:
     opts, args = getopt(sys.argv[1:], "hls:")
