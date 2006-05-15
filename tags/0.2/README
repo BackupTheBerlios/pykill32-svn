@@ -1,0 +1,38 @@
+THIS SOFTWARE IS UNDER MIT LICENSE.  
+Copyright (C) 2006 Manlio Perillo
+
+Read LICENSE file for more informations.
+
+
+INTRODUCTION: 
+pykill32 enable users to send signals to a remote (Python) process, in
+the Windows 2000/XP operating system.
+
+
+EXAMPLE:
+import signal
+import pykill32
+ 
+pykill32.kill(pid, signal.SIGTERM)
+
+
+There is also a script, kill.py, that emulates POSIX kill(1)
+kill.py -s SIGTERM pid
+
+
+REQUIREMENTS: 
+Python 2.4 (http://python.org/)
+pywin32 (a recent version)
+ctypes (a recent version)
+ 
+
+LIMITATIONS:
+pykill32 assumes that the remote process links to the MSVCR71.dll 
+(old the oldest msvcrt.dll) DLL and that the system maps this DLL at
+the same address for all processes that use it.
+
+Virtually all Windows programs use the C Runtime library.
+
+
+TODO:
+Check that pykill32 does not do insane things.

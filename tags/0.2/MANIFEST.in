@@ -1,0 +1,6 @@
+include *.py
+include README LICENSE INSTALL MANIFEST MANIFEST.in 
+recursive-include test *.py
+recursive-include bin *.py
+
+
