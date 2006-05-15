@@ -10,8 +10,6 @@ Read LICENSE file for more informations.
 
 import sys
 import os
-import time
-import signal
 import unittest
 
 sys.path.append('../')
@@ -26,7 +24,8 @@ class TestKill32(unittest.TestCase):
     
     def setUp(self):
         self.bin = os.path.join(sys.prefix, "python.exe")
-        
+    
+
     def testProcessId(self):
         """Test the ProcessId function.
         """
@@ -42,28 +41,11 @@ class TestKill32(unittest.TestCase):
                           
     
     def testFindModulesLocal(self):
-        """Test the FindModules function.
+        """Test the FindModules function, on local process.
         """
 
-        modules = [
-            info.szModule 
-            for info in toolhelp32.FindModules(os.getpid())
-            ]
+        pid = os.getpid()
         
-        self.failUnless("msvcrt.dll" in modules)
-        
-        # XXX the is valid only for Python 2.4?
-        if 1:
-            self.failUnless("MSVCR71.dll" in modules)
-
-    def testFindModules(self):
-        """Test the FindModules function.
-        """
-
-        handle = os.spawnv(os.P_NOWAIT, self.bin, 
-                          [self.bin, "-c", '"import time; time.sleep(5)"'])
-        pid = toolhelp32.GetProcessId(handle)
-
         modules = [
             info.szModule 
             for info in toolhelp32.FindModules(pid)
@@ -71,12 +53,32 @@ class TestKill32(unittest.TestCase):
         
         self.failUnless("msvcrt.dll" in modules)
         
-        # XXX the is valid only for Python 2.4?
+        # XXX this is valid only for Python 2.4?
+        if 1:
+            self.failUnless("MSVCR71.dll" in modules)
+
+    def testFindModules(self):
+        """Test the FindModules function.
+
+        XXX understand why this fails.
+        """
+
+        handle = os.spawnv(os.P_NOWAIT, self.bin, 
+                          [self.bin, "-c", '"import time; time.sleep(3)"'])
+        pid = toolhelp32.GetProcessId(handle)
+        
+        modules = [
+            info.szModule 
+            for info in toolhelp32.FindModules(pid)
+            ]
+        
+        self.failUnless("msvcrt.dll" in modules)
+        
+        # XXX this is valid only for Python 2.4?
         if 1:
             self.failUnless("MSVCR71.dll" in modules)
 
     
-        
 if __name__ == '__main__':
     unittest.main()
 

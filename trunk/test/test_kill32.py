@@ -26,8 +26,9 @@ class TestKill32(unittest.TestCase):
     """
     
     def setUp(self):
-        self.bin = os.path.join(sys.prefix, "pythonw.exe")
-        
+        self.bin = os.path.join(sys.prefix, "python.exe")
+    
+
     def testProcAddress(self):
         """Test that system maps 'raise' procedure of 'MSVCR71' module
         at the same address for all python processes.
@@ -54,7 +55,7 @@ class TestKill32(unittest.TestCase):
 
             self.failUnlessEqual(address, remoteAddress)
 
-    def testKillTERM(self):
+    def testKillTERMTwisted(self):
         """Test of a clean shutdown of a Twisted process.
         """
 
@@ -70,6 +71,27 @@ class TestKill32(unittest.TestCase):
 
         self.failUnless("shutdown\n" in lines)
         self.failIf("timeout\n" in lines)
+
+        os.remove(".out")
+
+    def testKillTERMPython(self):
+        """Test of a clean shutdown of a Python process.
+        """
+
+        handle = os.spawnv(os.P_NOWAIT, self.bin,
+                           [self.bin, "python_process.py"])
+
+        time.sleep(1) # XXX give time to process to start
+        pid = toolhelp32.GetProcessId(handle)
+        kill32.kill(pid, signal.SIGTERM)
+
+        os.waitpid(handle, os.P_WAIT)
+        lines = file(".out").readlines()
+
+        self.failUnless("signal handler\n" in lines)
+        self.failUnless("atexit\n" in lines)
+
+        os.remove(".out")
 
     def testKillILL(self):
         """Test of a forced shutdown od a Twisted process.
@@ -87,8 +109,10 @@ class TestKill32(unittest.TestCase):
 
         self.failIf("shutdown\n" in lines)
         self.failIf("timeout\n" in lines)
+        
+        os.remove(".out")
 
-    
+
 if __name__ == '__main__':
     unittest.main()
 
