@@ -35,6 +35,6 @@ setup(name="pykill32",
           "Programming Language :: Python",
           "Topic :: Software Development :: Libraries :: Python Modules",
           ],
-      py_modules = ["pykill32", "toolhelp32"], # ext_modules=[cpykill32]
+      py_modules = ["kill32", "toolhelp32"], # ext_modules=[cpykill32]
       scripts = ["bin/kill.py", "bin/dumpbin.py"]
       )
