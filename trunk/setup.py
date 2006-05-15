@@ -17,11 +17,11 @@ from distutils.core import setup, Extension
 #pykill32 = Extension("cpykill32", ["cpykill32.c"], libraries=["Kernel32"])
             
 setup(name="pykill32",
-      version="0.1",
+      version="0.2",
       author="Manlio Perillo",
       author_email="manlio.perillo@gmail.com",
       description="send signals to a remote (Python) process",
-      license="MIT"
+      license="MIT",
       url="http://developer.berlios.de/projects/pykill32/",
       classifiers=[
           "Development Status :: 4 - Beta",
