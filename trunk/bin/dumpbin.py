@@ -8,7 +8,7 @@ dumpbin [-h] [pid]
 if pid is not specified, the current process is used.
     
 THIS SOFTWARE IS UNDER MIT LICENSE.
-(C) 2006 Perillo Manlio (manlio.perillo@gmail.com)
+Copyright (c) 2006 Perillo Manlio (manlio.perillo@gmail.com)
 
 Read LICENSE file for more informations.
 """

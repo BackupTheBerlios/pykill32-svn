@@ -11,7 +11,7 @@ l list all supported signals.
 If no signal is specified, the TERM signal is sent.
 
 THIS SOFTWARE IS UNDER MIT LICENSE.
-(C) 2006 Perillo Manlio (manlio.perillo@gmail.com)
+Copyright (c) 2006 Perillo Manlio (manlio.perillo@gmail.com)
 
 Read LICENSE file for more informations.
 """
